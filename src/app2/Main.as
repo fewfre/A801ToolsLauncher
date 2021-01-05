@@ -117,7 +117,8 @@ package app2
 					"Dressroom": { "text":"Dressroom" },
 					"Shaman Items": { "text":"Shaman Items" },
 					"Skill Tree Builder": { "text":"Skill Tree Builder" },
-					"Bestiary": { "text":"Bestiary" }
+					"Bestiary": { "text":"Bestiary" },
+					"Tracker": { "text":"Tracker" }
 				}
 			});
 			
@@ -132,6 +133,7 @@ package app2
 			_addToolSection(-200, 90, new Resource.deadmaze(), [
 				// _newToolBtn(new Resource.dmDressroom(), 0.9, "Dressroom", _onDeadMazeDressroomChosen),
 				_newToolBtn(new Resource.dmBestiary(), 0.75, "Bestiary", _onDeadMazeBestiaryChosen),
+				_newToolBtn(new Resource.dmTracker(), 1, "Tracker", _onDeadMazeTrackerChosen),
 			]);
 			
 			// Fortoresse
@@ -191,6 +193,10 @@ package app2
 		
 		private function _onDeadMazeBestiaryChosen(e:*) : void {
 			_doToolChoiceClicked("https://projects.fewfre.com/a801/deadmaze/bestiary/", "bestiary.swf");
+		}
+		
+		private function _onDeadMazeTrackerChosen(e:*) : void {
+			navigateToURL(new URLRequest("https://projects.fewfre.com/a801/deadmaze/tracker/"), "_blank");
 		}
 		
 		private function _onFortoresseDressroomChosen(e:*) : void {

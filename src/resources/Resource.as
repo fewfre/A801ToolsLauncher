@@ -22,6 +22,8 @@ package resources
 		public static const dmDressroom:Class;
 		[Embed (source="images/deadmaze-bestiary.png" )]
 		public static const dmBestiary:Class;
+		[Embed (source="images/deadmaze-tracker.png" )]
+		public static const dmTracker:Class;
 		[Embed (source="images/fortoresse-dressroom.png" )]
 		public static const fortDressroom:Class;
 		// Misc
