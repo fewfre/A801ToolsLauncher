@@ -57,47 +57,49 @@ package app2
 			stage.scaleMode = StageScaleMode.SHOW_ALL;
 			stage.frameRate = 16;
 
-			_loaderDisplay = addChild( new LoaderDisplay({ x:stage.stageWidth * 0.5, y:stage.stageHeight * 0.5 }) ) as LoaderDisplay;
+			// _loaderDisplay = addChild( new LoaderDisplay({ x:stage.stageWidth * 0.5, y:stage.stageHeight * 0.5 }) ) as LoaderDisplay;
 			
-			_startPreload();
-		}
-		
-		private function _startPreload() : void {
-			_load([
-				_swfUrlBase+"resources/config.json",
-			], String( new Date().getTime() ), _onPreloadComplete);
-		}
-		
-		private function _onPreloadComplete() : void {
-			_config = Fewf.assets.getData("config");
-			_defaultLang = _getDefaultLang(_config.languages["default"]);
+			// _startPreload();
 			
-			_startLoad();
-		}
-		
-		private function _startLoad() : void {
-			var now:Date = new Date();
-			var cb = [now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()].join("-");
-			var tPacks = [
-				_swfUrlBase+"resources/i18n/"+_defaultLang+".json",
-				// [_swfUrlBase+"resources/interface.swf", { useCurrentDomain:true }],
-				// _swfUrlBase+"resources/flags.swf",
-			];
-			
-			_load(tPacks, cb, _onLoadComplete);
-		}
-		
-		private function _onLoadComplete() : void {
-			Fewf.i18n.parseFile(_defaultLang, Fewf.assets.getData(_defaultLang));
-			
-			_loaderDisplay.destroy();
-			removeChild( _loaderDisplay );
-			_loaderDisplay = null;
-			
-			// _world = addChild(new World(stage)) as World;
-			// loadSwfApplication();
 			_addToolsTray();
 		}
+		
+		// private function _startPreload() : void {
+		// 	_load([
+		// 		_swfUrlBase+"resources/config.json",
+		// 	], String( new Date().getTime() ), _onPreloadComplete);
+		// }
+		
+		// private function _onPreloadComplete() : void {
+		// 	_config = Fewf.assets.getData("config");
+		// 	_defaultLang = _getDefaultLang(_config.languages["default"]);
+			
+		// 	_startLoad();
+		// }
+		
+		// private function _startLoad() : void {
+		// 	var now:Date = new Date();
+		// 	var cb = [now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()].join("-");
+		// 	var tPacks = [
+		// 		_swfUrlBase+"resources/i18n/"+_defaultLang+".json",
+		// 		// [_swfUrlBase+"resources/interface.swf", { useCurrentDomain:true }],
+		// 		// _swfUrlBase+"resources/flags.swf",
+		// 	];
+			
+		// 	_load(tPacks, cb, _onLoadComplete);
+		// }
+		
+		// private function _onLoadComplete() : void {
+		// 	Fewf.i18n.parseFile(_defaultLang, Fewf.assets.getData(_defaultLang));
+			
+		// 	_loaderDisplay.destroy();
+		// 	removeChild( _loaderDisplay );
+		// 	_loaderDisplay = null;
+			
+		// 	// _world = addChild(new World(stage)) as World;
+		// 	// loadSwfApplication();
+		// 	_addToolsTray();
+		// }
 		
 		/***************************
 		* Setup Selections
@@ -121,7 +123,7 @@ package app2
 			
 			// Transformice
 			_addToolSection(0, -90, new Resource.transformice(), [
-				// _newToolBtn(new Resource.tfmDressroom(), 1, "Dressroom", _onTransformiceDressroomChosen),
+				_newToolBtn(new Resource.tfmDressroom(), 1, "Dressroom", _onTransformiceDressroomChosen),
 				_newToolBtn(new Resource.tfmShamanItems(), 1, "Shaman Items", _onTransformiceShamanItemsChosen),
 				_newToolBtn(new Resource.tfmSkillTree(), 1, "Skill Tree Builder", _onTransformiceSkillTreeChosen),
 			]);
