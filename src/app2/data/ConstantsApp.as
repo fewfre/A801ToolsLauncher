@@ -12,7 +12,7 @@ package app2.data
 		/****************************
 		* General
 		*****************************/
-		public static const VERSION					: String = "1.0";
+		public static const VERSION					: String = "1.1";
 		public static const SOURCE_URL				: String = "https://github.com/fewfre/TransformiceDressroom";
 		
 		public static const DEFAULT_SKIN_ID			: int = 0;
