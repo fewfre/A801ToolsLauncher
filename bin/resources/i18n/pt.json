@@ -1,0 +1,33 @@
+{
+	"defaultFont": "Verdana",
+	"defaultScale": 1,
+	"strings": {
+		"loading_progress":		{ "text":"{0}" },
+		"infobar_id":			{ "text":"ID: {0}" },
+		
+		"loading":				{ "text":"Itens que faltam carregar: {0}" },
+		"loading_finished":		{ "text":"Carregamento completo. Inicializando..." },
+		"btn_color_defaults":	{ "text":"Padrões" },
+		"share_header":			{ "text":"Compartilhe sua criação!" },
+		"share_link_copied":	{ "text":"Link copiado. Cole para usá-lo." },
+		"share_copy":			{ "text":"Copiar" },
+		"version":				{ "text":"Versão: {0}" },
+		"translated_by":		{ "text":"Traduzido por: Buwho" },
+		
+		"btn_normal_mode":		{ "text":"Normal" },
+		"btn_hard_mode":		{ "text":"Difícil" },
+		"btn_divine_mode":		{ "text":"Divino" },
+		"tab_head":				{ "text":"Cabeça" },
+		"tab_hair":				{ "text":"Penteado", "scale":0.95 },
+		"tab_ears":				{ "text":"Orelhas" },
+		"tab_eyes":				{ "text":"Olhos" },
+		"tab_mouth":			{ "text":"Boca" },
+		"tab_neck":				{ "text":"Pescoço" },
+		"tab_tail":				{ "text":"Rabo" },
+		"tab_contacts":			{ "text":"Lentes" },
+		"tab_hand":				{ "text":"Mãos" },
+		"tab_furs":				{ "text":"Pelos" },
+		"tab_poses":			{ "text":"Pose" },
+		"tab_other":			{ "text":"Outros" }
+	}
+}

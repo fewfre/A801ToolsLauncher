@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<application xmlns="http://ns.adobe.com/air/application/3.1"> 
+	
+	<id>com.fewfre.a810toolslauncher</id>
+	<versionNumber>1.0</versionNumber> 
+	<filename>tools</filename> 
+	
+	<name>Fewfre's A801 Tools</name> 
+	<description></description> 
+	<copyright></copyright> 
+	
+	<initialWindow> 
+		<title>Fewfre's A801 Tools</title> 
+		<content>tools.swf</content> 
+		<systemChrome>standard</systemChrome> 
+		<transparent>false</transparent> 
+		<visible>true</visible> 
+		<minimizable>true</minimizable> 
+		<maximizable>true</maximizable> 
+		<resizable>true</resizable> 
+	</initialWindow>
+	
+	<icon>
+		<image16x16>meta/icon_16.png</image16x16>
+		<image32x32>meta/icon_32.png</image32x32>
+		<image48x48>meta/icon_48.png</image48x48>
+		<image72x72>meta/icon_72.png</image72x72>
+		<image128x128>meta/icon_128.png</image128x128>
+	</icon>
+
+	<android>
+		<manifestAdditions>
+			<![CDATA[
+				<manifest android:installLocation="auto">
+					<uses-permission android:name="android.permission.INTERNET"/>
+					<uses-configuration android:reqFiveWayNav="true"/>
+					<supports-screens android:normalScreens="true"/>
+					<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>
+					<application android:enabled="true">
+						<activity android:excludeFromRecents="false">
+							<intent-filter>
+						<action android:name="android.intent.action.MAIN"/>
+						<category android:name="android.intent.category.LAUNCHER"/>
+							</intent-filter>
+						</activity>
+					</application>
+				</manifest>
+			]]>
+		</manifestAdditions>
+	</android>
+	
+	<!-- 
+	More options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	-->
+</application>
