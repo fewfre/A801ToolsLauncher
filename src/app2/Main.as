@@ -122,40 +122,44 @@ package app2
 				}
 			});
 			
+			var btns:Array;
+			
 			// Transformice
-			_addToolSection(0, -90, new Resource.transformice(), [
-				_newToolBtn(new Resource.tfmDressroom(), 1, "Dressroom", _onTransformiceDressroomChosen),
+			_addToolSection(0, -90, new Resource.transformice(), btns = [
 				_newToolBtn(new Resource.tfmShamanItems(), 1, "Shaman Items", _onTransformiceShamanItemsChosen),
+				_newToolBtn(new Resource.tfmDressroom(), 1, "Dressroom", _onTransformiceDressroomChosen, 90),
 				_newToolBtn(new Resource.tfmSkillTree(), 1, "Skill Tree Builder", _onTransformiceSkillTreeChosen),
-			]);
+			], 375, 145);
+			btns[0].x -= 10;
+			btns[2].x += 10;
+			btns[1].Text.size = 15;
 			
 			// Deadmaze
-			_addToolSection(-200, 90, new Resource.deadmaze(), [
+			_addToolSection(-200, 90+10, new Resource.deadmaze(), [
 				// _newToolBtn(new Resource.dmDressroom(), 0.9, "Dressroom", _onDeadMazeDressroomChosen),
 				_newToolBtn(new Resource.dmBestiary(), 0.75, "Bestiary", _onDeadMazeBestiaryChosen),
 				_newToolBtn(new Resource.dmTracker(), 1, "Tracker", _onDeadMazeTrackerChosen),
 			]);
 			
 			// Fortoresse
-			_addToolSection(200, 90, new Resource.fortoresse(), [
+			_addToolSection(200, 90+10, new Resource.fortoresse(), [
 				_newToolBtn(new Resource.fortDressroom(), 1, "Dressroom", _onFortoresseDressroomChosen),
 			]);
 		}
 		
-		private function _newToolBtn(img:DisplayObject, scale:Number, text:String, pOnClick:Function) : SpriteButton {
+		private function _newToolBtn(img:DisplayObject, scale:Number, text:String, pOnClick:Function, height:int=75) : SpriteButton {
 			var myObj = new Sprite();
 			myObj.addChild(img);
 			img.x = -(img.width*scale*0.5+1);
 			img.y = -(img.height*scale*0.5+1);
 			img.scaleX = img.scaleY = scale;
 			
-			var btn = new SpriteButton({ obj:myObj, text:text, width:75, height:75, origin:0.5 });
+			var btn = new SpriteButton({ obj:myObj, text:text, width:height*1.1, height:height, origin:0.5 });
 			btn.addEventListener(ButtonBase.CLICK, pOnClick);
 			return btn;
 		}
 		
-		private function _addToolSection(x:Number, y:Number, icon:Bitmap, buttons:Array) : Sprite {
-			var width = 300, height = 125;
+		private function _addToolSection(x:Number, y:Number, icon:Bitmap, buttons:Array, width:int=300,height=125) : Sprite {
 			var tray = _toolsTray.addChild(new RoundedRectangle({ x:x, y:y, width:width, height:height, origin:0.5 })) as RoundedRectangle;
 			tray.drawSimpleGradient(ConstantsApp.COLOR_TRAY_GRADIENT, 15, ConstantsApp.COLOR_TRAY_B_1, ConstantsApp.COLOR_TRAY_B_2, ConstantsApp.COLOR_TRAY_B_3);
 			// tray.draw(0x6A7495, 15, 0x5d7d90, 0x11171c, 0x3c5064);
