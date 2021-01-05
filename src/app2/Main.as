@@ -247,7 +247,8 @@ package app2
 			toolUrlLoader.dataFormat = "binary";
 			toolUrlLoader.addEventListener("complete", _onToolLoadComplete);
 			// toolUrlLoader.addEventListener("progress", chargementEnCours);
-			toolUrlLoader.load(new URLRequest(toolSwfUrl + "?d=" + new Date().getTime()));
+			var now:Date = new Date(), cb:String = [now.getFullYear(), now.getMonth(), now.getDate()].join("-"); // Cache break once a day to be safe
+			toolUrlLoader.load(new URLRequest(toolSwfUrl + "?d=" + cb));
 		}
 
 		private function _onToolLoadComplete(event:Event) : void {
