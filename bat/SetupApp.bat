@@ -9,13 +9,6 @@ cd %~dp0 & cd ..
 
 :: NOTICE: all paths are relative to project root
 
-:: Your certificate information
-set CERT_NAME="Fewfre's A801 Tools"
-set CERT_PASS=Q7#7CBSwVDh1
-:: set CERT_FILE="bat\TransformiceDressroom.p12"
-set CERT_FILE="E:\projects\atelier801\_etc\fewfre-adobe-publish.p12"
-set SIGNING_OPTIONS=-storetype pkcs12 -keystore %CERT_FILE% -storepass %CERT_PASS%
-
 :: Application descriptor
 set APP_XML=application.xml
 
@@ -26,10 +19,6 @@ set FILE_OR_DIR=-C %APP_DIR% .
 :: Your application ID (must match <id> of Application descriptor) and remove spaces
 for /f "tokens=3 delims=<>" %%a in ('findstr /R /C:"^[ 	]*<id>" %APP_XML%') do set APP_ID=%%a
 set APP_ID=%APP_ID: =%
-
-:: Output
-set AIR_PATH=air
-set AIR_NAME=A801Tools
 
 :validation
 findstr /C:"<id>%APP_ID%</id>" "%APP_XML%" > NUL
