@@ -11,6 +11,8 @@ package resources
 		public static const fortoresse:Class;
 		[Embed (source="images/transformice.png" )]
 		public static const transformice:Class;
+		[Embed (source="images/nekodancer.png" )]
+		public static const nekodancer:Class;
 		// App icons
 		[Embed (source="images/transformice-dressroom.png" )]
 		public static const tfmDressroom:Class;
@@ -26,6 +28,8 @@ package resources
 		public static const dmTracker:Class;
 		[Embed (source="images/fortoresse-dressroom.png" )]
 		public static const fortDressroom:Class;
+		[Embed (source="images/nekodancer-dressroom.png" )]
+		public static const nekoDressroom:Class;
 		// Misc
 		[Embed (source="images/loader.png" )]
 		public static const loader:Class;

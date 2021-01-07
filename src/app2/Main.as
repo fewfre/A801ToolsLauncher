@@ -135,16 +135,22 @@ package app2
 			btns[1].Text.size = 15;
 			
 			// Deadmaze
-			_addToolSection(-200, 90+10, new Resource.deadmaze(), [
-				// _newToolBtn(new Resource.dmDressroom(), 0.9, "Dressroom", _onDeadMazeDressroomChosen),
+			_addToolSection(-200-40-10, 90+25, new Resource.deadmaze(), [
+				_newToolBtn(new Resource.dmDressroom(), 0.9, "Dressroom", _onDeadMazeDressroomChosen),
 				_newToolBtn(new Resource.dmBestiary(), 0.75, "Bestiary", _onDeadMazeBestiaryChosen),
 				_newToolBtn(new Resource.dmTracker(), 1, "Tracker", _onDeadMazeTrackerChosen),
 			]);
 			
 			// Fortoresse
-			_addToolSection(200, 90+10, new Resource.fortoresse(), [
+			_addToolSection(200-140-10, 90+25, new Resource.fortoresse(), [
 				_newToolBtn(new Resource.fortDressroom(), 1, "Dressroom", _onFortoresseDressroomChosen),
-			]);
+			], 200);
+			
+			// Nekodancer
+			var tTray = _addToolSection(200+110-10, 90+25, new Resource.nekodancer(), [
+				_newToolBtn(new Resource.nekoDressroom(), 0.8, "Dressroom", _onNekodancerDressroomChosen),
+			], 200);
+			tTray.getChildAt(0).y += 22;
 		}
 		
 		private function _newToolBtn(img:DisplayObject, scale:Number, text:String, pOnClick:Function, height:int=75) : SpriteButton {
@@ -205,6 +211,10 @@ package app2
 		
 		private function _onFortoresseDressroomChosen(e:*) : void {
 			_doToolChoiceClicked("https://projects.fewfre.com/a801/fortoresse/dressroom/", "dressroom.swf");
+		}
+		
+		private function _onNekodancerDressroomChosen(e:*) : void {
+			_doToolChoiceClicked("https://projects.fewfre.com/a801/nekodancer/dressroom/", "dressroom.swf");
 		}
 		
 		private function _doToolChoiceClicked(base:String, swf:String) : void {
