@@ -134,17 +134,17 @@ package app2
 			btns[2].x += 10;
 			btns[1].Text.size = 15;
 			
+			// Fortoresse
+			_addToolSection(-(200+110-10), 90+25, new Resource.fortoresse(), [
+				_newToolBtn(new Resource.fortDressroom(), 1, "Dressroom", _onFortoresseDressroomChosen),
+			], 200);
+			
 			// Deadmaze
-			_addToolSection(-200-40-10, 90+25, new Resource.deadmaze(), [
+			_addToolSection(0, 90+25, new Resource.deadmaze(), [
 				_newToolBtn(new Resource.dmDressroom(), 0.9, "Dressroom", _onDeadMazeDressroomChosen),
 				_newToolBtn(new Resource.dmBestiary(), 0.75, "Bestiary", _onDeadMazeBestiaryChosen),
 				_newToolBtn(new Resource.dmTracker(), 1, "Tracker", _onDeadMazeTrackerChosen),
 			]);
-			
-			// Fortoresse
-			_addToolSection(200-140-10, 90+25, new Resource.fortoresse(), [
-				_newToolBtn(new Resource.fortDressroom(), 1, "Dressroom", _onFortoresseDressroomChosen),
-			], 200);
 			
 			// Nekodancer
 			var tTray = _addToolSection(200+110-10, 90+25, new Resource.nekodancer(), [
