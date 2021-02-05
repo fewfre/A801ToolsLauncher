@@ -118,8 +118,18 @@ package app2
 					"Shaman Items": { "text":"Shaman Items" },
 					"Skill Tree Builder": { "text":"Skill Tree Builder" },
 					"Bestiary": { "text":"Bestiary" },
-					"Tracker": { "text":"Tracker" }
+					"Tracker": { "text":"Tracker" },
+					"official_dressing": { "text":"Transformice now has an official dressroom!\nUse the command /dressing in-game to open it." },
+					"read_more": { "text":"Read more" }
 				}
+			});
+			
+			_toolsTray.addChild(new TextBase({ text:"official_dressing", x:-315, y:-100 }));
+			var readMoreLink = _toolsTray.addChild(new TextBase({ text:"read_more", x:-315, y:-75, color:0x0000FF }));
+			readMoreLink.buttonMode = true;
+			readMoreLink.mouseChildren = false;
+			readMoreLink.addEventListener("click", function(){
+				navigateToURL(new URLRequest("https://atelier801.com/topic?f=5&t=930014"), "_blank");
 			});
 			
 			var btns:Array;
