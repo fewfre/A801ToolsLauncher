@@ -33,5 +33,8 @@ package resources
 		// Misc
 		[Embed (source="images/loader.png" )]
 		public static const loader:Class;
+		// https://iconarchive.com/show/papirus-apps-icons-by-papirus-team/discord-icon.html
+		[Embed (source="images/discord-icon.png" )]
+		public static const discordIcon:Class;
 	}
 }

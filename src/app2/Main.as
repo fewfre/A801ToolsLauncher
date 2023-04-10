@@ -40,7 +40,7 @@ package app2
 		// Constructor
 		public function Main() {
 			super();
-			ParentApp.start();
+			ParentApp.start(this);
 			if (stage) {
 				this._start();
 			} else {
@@ -61,6 +61,7 @@ package app2
 			
 			// _startPreload();
 			
+			_setupI18n();
 			_addToolsTray();
 		}
 		
@@ -101,15 +102,7 @@ package app2
 		// 	_addToolsTray();
 		// }
 		
-		/***************************
-		* Setup Selections
-		****************************/
-		private var _toolsTray : MovieClip;
-		private function _addToolsTray() : void {
-			_toolsTray = addChild(new MovieClip()) as MovieClip;
-			_toolsTray.x = stage.stageWidth * 0.5;
-			_toolsTray.y = stage.stageHeight * 0.5;
-			
+		private function _setupI18n() {
 			Fewf.i18n.parseFile("en", {
 				defaultFont: "Veranda",
 				defaultScale: 1,
@@ -120,17 +113,22 @@ package app2
 					"Bestiary": { "text":"Bestiary" },
 					"Tracker": { "text":"Tracker" },
 					"official_dressing": { "text":"Transformice now has an official dressroom!\nUse the command /dressing in-game to open it." },
-					"read_more": { "text":"Read more" }
+					"read_more": { "text":"Read more" },
+					"Discord": { "text":"Fewfre Discord" },
+					"OpenedInBrowser": { "text":"Link opened in web browser" }
 				}
 			});
-			
-			_toolsTray.addChild(new TextBase({ text:"official_dressing", x:-315, y:-100 }));
-			var readMoreLink = _toolsTray.addChild(new TextBase({ text:"read_more", x:-315, y:-75, color:0x0000FF }));
-			readMoreLink.buttonMode = true;
-			readMoreLink.mouseChildren = false;
-			readMoreLink.addEventListener("click", function(){
-				navigateToURL(new URLRequest("https://atelier801.com/topic?f=5&t=930014"), "_blank");
-			});
+		}
+		
+		/***************************
+		* Setup Selections
+		****************************/
+		private var _toolsTray : MovieClip;
+		private var _openedInBrowserPopup : OpenedInBrowserPopup;
+		private function _addToolsTray() : void {
+			_toolsTray = addChild(new MovieClip()) as MovieClip;
+			_toolsTray.x = stage.stageWidth * 0.5;
+			_toolsTray.y = stage.stageHeight * 0.5;
 			
 			var btns:Array;
 			
@@ -161,6 +159,27 @@ package app2
 				_newToolBtn(new Resource.nekoDressroom(), 0.8, "Dressroom", _onNekodancerDressroomChosen),
 			], 200);
 			tTray.getChildAt(0).y += 22;
+			
+			// Add note about /dressing
+			_toolsTray.addChild(new TextBase({ text:"official_dressing", x:-315, y:-100 }));
+			var readMoreLink = _toolsTray.addChild(new TextBase({ text:"read_more", x:-315, y:-75, color:0x0000FF }));
+			readMoreLink.buttonMode = true;
+			readMoreLink.mouseChildren = false;
+			readMoreLink.addEventListener("click", function(){
+				_openLink("https://atelier801.com/topic?f=5&t=930014");
+			});
+			
+			// // Add Discord Link
+			// var tDiscordBtn = _newToolBtn(new Resource.discordIcon(), 1, "Discord", _onDiscordClicked, 70);
+			// _toolsTray.addChild(tDiscordBtn);
+			// tDiscordBtn.getChildAt(0).y -= 4;
+			// tDiscordBtn.x = (Fewf.stage.stageWidth*0.5) - 45;
+			// tDiscordBtn.y = -(Fewf.stage.stageHeight*0.5) + 45;
+			
+			_openedInBrowserPopup = new OpenedInBrowserPopup({});
+			_openedInBrowserPopup.addEventListener(OpenedInBrowserPopup.CLOSE, function(){
+				removeChild(_openedInBrowserPopup);
+			});
 		}
 		
 		private function _newToolBtn(img:DisplayObject, scale:Number, text:String, pOnClick:Function, height:int=75) : SpriteButton {
@@ -204,7 +223,7 @@ package app2
 		}
 		
 		private function _onTransformiceSkillTreeChosen(e:*) : void {
-			navigateToURL(new URLRequest("https://projects.fewfre.com/a801/transformice/skill_tree/"), "_blank");
+			_openLink("https://projects.fewfre.com/a801/transformice/skill_tree/");
 		}
 		
 		private function _onDeadMazeDressroomChosen(e:*) : void {
@@ -216,7 +235,7 @@ package app2
 		}
 		
 		private function _onDeadMazeTrackerChosen(e:*) : void {
-			navigateToURL(new URLRequest("https://projects.fewfre.com/a801/deadmaze/tracker/"), "_blank");
+			_openLink("https://projects.fewfre.com/a801/deadmaze/tracker/");
 		}
 		
 		private function _onFortoresseDressroomChosen(e:*) : void {
@@ -227,9 +246,23 @@ package app2
 			_doToolChoiceClicked("https://projects.fewfre.com/a801/nekodancer/dressroom/", "dressroom.swf");
 		}
 		
+		private function _onDiscordClicked(e:*) : void {
+			_openLink("https://discord.gg/DREPH9GqWw");
+		}
+		
 		private function _doToolChoiceClicked(base:String, swf:String) : void {
 			removeChild(_toolsTray);
 			_loadTool(base+swf, base);
+		}
+		
+		private function _openLink(url:String) : void {
+			navigateToURL(new URLRequest(url), "_blank");
+			addChild(_openedInBrowserPopup);
+		}
+		
+		public function reopenSelectionLauncher() : void {
+			removeChild(toolLoader);
+			_addToolsTray();
 		}
 		
 		/***************************
@@ -271,6 +304,7 @@ package app2
 			toolUrlLoader.load(new URLRequest(toolSwfUrl + "?d=" + cb));
 		}
 
+		private var _loadedContent:*;
 		private function _onToolLoadComplete(event:Event) : void {
 			var data:ByteArray = toolUrlLoader.data as ByteArray;
 			var ctx:LoaderContext = new LoaderContext();
@@ -282,11 +316,14 @@ package app2
 				removeChildAt(0);
 			}
 			
-			// Add SWF to stage
-			toolLoader = new Loader();
-			toolLoader.loadBytes(data, ctx);
-			// toolLoader.contentLoaderInfo.addEventListener("complete", finChargement);
-			addChild(toolLoader);
+			try {
+				// Add SWF to stage
+				toolLoader = new Loader();
+				toolLoader.loadBytes(data, ctx);
+				// toolLoader.contentLoaderInfo.addEventListener("complete", finChargement);
+				addChild(toolLoader);
+			}
+			catch(e) {}
 		}
 		
 		
