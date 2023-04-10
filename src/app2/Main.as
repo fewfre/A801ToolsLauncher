@@ -142,6 +142,8 @@ package app2
 			btns[2].x += 10;
 			btns[1].Text.size = 15;
 			
+			_addTfmDecorationsButton(-150, -162);
+			
 			// Fortoresse
 			_addToolSection(-(200+110-10), 90+25, new Resource.fortoresse(), [
 				_newToolBtn(new Resource.fortDressroom(), 1, "Dressroom", _onFortoresseDressroomChosen),
@@ -214,6 +216,20 @@ package app2
 			return tray;
 		}
 		
+		private function _addTfmDecorationsButton(pX:Number, pY:Number) {
+			var img = new Resource.tfmDecorations(), scale:Number = 0.75;
+			var myObj = new Sprite();
+			myObj.addChild(img);
+			img.x = -(img.width*scale*0.5+1);
+			// img.y = -(img.height*scale*0.5+1);
+			img.y = -(img.height*scale);
+			img.scaleX = img.scaleY = scale;
+			
+			var tfmDecorationsBtn = _toolsTray.addChild(new ButtonBase({ obj:myObj, x:pX, y:pY }));
+			tfmDecorationsBtn.addChild(myObj);
+			tfmDecorationsBtn.addEventListener(ButtonBase.CLICK, _onTransformiceDecorationsChosen);
+		}
+		
 		private function _onTransformiceDressroomChosen(e:*) : void {
 			_doToolChoiceClicked("https://projects.fewfre.com/a801/transformice/dressroom/", "dressroom.swf");
 		}
@@ -224,6 +240,10 @@ package app2
 		
 		private function _onTransformiceSkillTreeChosen(e:*) : void {
 			_openLink("https://projects.fewfre.com/a801/transformice/skill_tree/");
+		}
+		
+		private function _onTransformiceDecorationsChosen(e:*) : void {
+			_doToolChoiceClicked("https://projects.fewfre.com/a801/transformice/decorations/", "app.swf");
 		}
 		
 		private function _onDeadMazeDressroomChosen(e:*) : void {

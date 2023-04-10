@@ -20,6 +20,8 @@ package resources
 		public static const tfmShamanItems:Class;
 		[Embed (source="images/transformice-skill-tree.png" )]
 		public static const tfmSkillTree:Class;
+		[Embed (source="images/transformice-decorations.png" )]
+		public static const tfmDecorations:Class;
 		[Embed (source="images/deadmaze-dressroom.png" )]
 		public static const dmDressroom:Class;
 		[Embed (source="images/deadmaze-bestiary.png" )]
