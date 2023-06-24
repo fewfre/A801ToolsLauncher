@@ -114,7 +114,7 @@ package app2
 					"Tracker": { "text":"Tracker" },
 					"official_dressing": { "text":"Transformice now has an official dressroom!\nUse the command /dressing in-game to open it." },
 					"read_more": { "text":"Read more" },
-					"Discord": { "text":"Fewfre Discord" },
+					"Discord": { "text":"Discord" },
 					"OpenedInBrowser": { "text":"Link opened in web browser" }
 				}
 			});
@@ -171,12 +171,12 @@ package app2
 				_openLink("https://atelier801.com/topic?f=5&t=930014");
 			});
 			
-			// // Add Discord Link
-			// var tDiscordBtn = _newToolBtn(new Resource.discordIcon(), 1, "Discord", _onDiscordClicked, 70);
-			// _toolsTray.addChild(tDiscordBtn);
-			// tDiscordBtn.getChildAt(0).y -= 4;
-			// tDiscordBtn.x = (Fewf.stage.stageWidth*0.5) - 45;
-			// tDiscordBtn.y = -(Fewf.stage.stageHeight*0.5) + 45;
+			// Add Discord Link
+			var tDiscordBtn = _newToolBtn(new Resource.discordIcon(), 1, "Discord", _onDiscordClicked, 70);
+			_toolsTray.addChild(tDiscordBtn);
+			tDiscordBtn.getChildAt(0).y -= 4;
+			tDiscordBtn.x = (Fewf.stage.stageWidth*0.5) - 45;
+			tDiscordBtn.y = -(Fewf.stage.stageHeight*0.5) + 45;
 			
 			_openedInBrowserPopup = new OpenedInBrowserPopup({});
 			_openedInBrowserPopup.addEventListener(OpenedInBrowserPopup.CLOSE, function(){
