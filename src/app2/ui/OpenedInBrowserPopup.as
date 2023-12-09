@@ -25,7 +25,7 @@ package app2.ui
 			/****************************
 			* Click Tray
 			*****************************/
-			var tClickTray = addChild(new Sprite());
+			var tClickTray:Sprite = addChild(new Sprite()) as Sprite;
 			tClickTray.x = -5000;
 			tClickTray.y = -5000;
 			tClickTray.graphics.beginFill(0x000000, 0.35);

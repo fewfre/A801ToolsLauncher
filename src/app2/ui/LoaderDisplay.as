@@ -33,7 +33,7 @@ package app2.ui
 			_loadingSpinner = addChild(new MovieClip()) as MovieClip;
 			_loadingSpinner.y -= 45;
 			
-			var img = _loadingSpinner.addChild(new Resource.loader());
+			var img:DisplayObject = _loadingSpinner.addChild(new Resource.loader());
 			img.x = -img.width*0.5;
 			img.y = -img.height*0.5;
 			

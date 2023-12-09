@@ -48,7 +48,7 @@ package app2
 			}
 		}
 		
-		private function _start(...args:*) {
+		private function _start(...args:*) : void {
 			_swfUrlBase = this.loaderInfo.parameters.swfUrlBase || "";
 			
 			Fewf.init(stage);
@@ -102,7 +102,7 @@ package app2
 		// 	_addToolsTray();
 		// }
 		
-		private function _setupI18n() {
+		private function _setupI18n() : void {
 			Fewf.i18n.parseFile("en", {
 				defaultFont: "Veranda",
 				defaultScale: 1,
@@ -157,46 +157,46 @@ package app2
 			]);
 			
 			// Nekodancer
-			var tTray = _addToolSection(200+110-10, 90+25, new Resource.nekodancer(), [
+			var tTray:Sprite = _addToolSection(200+110-10, 90+25, new Resource.nekodancer(), [
 				_newToolBtn(new Resource.nekoDressroom(), 0.8, "Dressroom", _onNekodancerDressroomChosen),
 			], 200);
 			tTray.getChildAt(0).y += 22;
 			
 			// Add note about /dressing
 			_toolsTray.addChild(new TextBase({ text:"official_dressing", x:-315, y:-100 }));
-			var readMoreLink = _toolsTray.addChild(new TextBase({ text:"read_more", x:-315, y:-75, color:0x0000FF }));
+			var readMoreLink:TextBase = _toolsTray.addChild(new TextBase({ text:"read_more", x:-315, y:-75, color:0x0000FF })) as TextBase;
 			readMoreLink.buttonMode = true;
 			readMoreLink.mouseChildren = false;
-			readMoreLink.addEventListener("click", function(){
+			readMoreLink.addEventListener("click", function():void{
 				_openLink("https://atelier801.com/topic?f=5&t=930014");
 			});
 			
 			// Add Discord Link
-			var tDiscordBtn = _newToolBtn(new Resource.discordIcon(), 1, "Discord", _onDiscordClicked, 70);
+			var tDiscordBtn:SpriteButton = _newToolBtn(new Resource.discordIcon(), 1, "Discord", _onDiscordClicked, 70);
 			_toolsTray.addChild(tDiscordBtn);
 			tDiscordBtn.getChildAt(0).y -= 4;
 			tDiscordBtn.x = (Fewf.stage.stageWidth*0.5) - 45;
 			tDiscordBtn.y = -(Fewf.stage.stageHeight*0.5) + 45;
 			
 			_openedInBrowserPopup = new OpenedInBrowserPopup({});
-			_openedInBrowserPopup.addEventListener(OpenedInBrowserPopup.CLOSE, function(){
+			_openedInBrowserPopup.addEventListener(OpenedInBrowserPopup.CLOSE, function():void{
 				removeChild(_openedInBrowserPopup);
 			});
 		}
 		
 		private function _newToolBtn(img:DisplayObject, scale:Number, text:String, pOnClick:Function, height:int=75) : SpriteButton {
-			var myObj = new Sprite();
+			var myObj:Sprite = new Sprite();
 			myObj.addChild(img);
 			img.x = -(img.width*scale*0.5+1);
 			img.y = -(img.height*scale*0.5+1);
 			img.scaleX = img.scaleY = scale;
 			
-			var btn = new SpriteButton({ obj:myObj, text:text, width:height*1.1, height:height, origin:0.5 });
+			var btn:SpriteButton = new SpriteButton({ obj:myObj, text:text, width:height*1.1, height:height, origin:0.5 });
 			btn.addEventListener(ButtonBase.CLICK, pOnClick);
 			return btn;
 		}
 		
-		private function _addToolSection(x:Number, y:Number, icon:Bitmap, buttons:Array, width:int=300,height=125) : Sprite {
+		private function _addToolSection(x:Number, y:Number, icon:Bitmap, buttons:Array, width:int=300,height:int=125) : Sprite {
 			var tray = _toolsTray.addChild(new RoundedRectangle({ x:x, y:y, width:width, height:height, origin:0.5 })) as RoundedRectangle;
 			tray.drawSimpleGradient(ConstantsApp.COLOR_TRAY_GRADIENT, 15, ConstantsApp.COLOR_TRAY_B_1, ConstantsApp.COLOR_TRAY_B_2, ConstantsApp.COLOR_TRAY_B_3);
 			// tray.draw(0x6A7495, 15, 0x5d7d90, 0x11171c, 0x3c5064);
@@ -205,8 +205,8 @@ package app2
 			icon.x = -icon.width*0.5;
 			icon.y = -height*0.5-icon.height+25;
 			
-			var spacingX = buttons[0].Width+10;
-			var startX = -spacingX*(buttons.length-1)*0.5;
+			var spacingX:Number = buttons[0].Width+10;
+			var startX:Number = -spacingX*(buttons.length-1)*0.5;
 			for(var i:int = 0; i < buttons.length; i++) {
 				var btn:SpriteButton = tray.addChild(buttons[i]) as SpriteButton;
 				btn.x = startX+i*spacingX;
@@ -216,16 +216,16 @@ package app2
 			return tray;
 		}
 		
-		private function _addTfmDecorationsButton(pX:Number, pY:Number) {
-			var img = new Resource.tfmDecorations(), scale:Number = 0.75;
-			var myObj = new Sprite();
+		private function _addTfmDecorationsButton(pX:Number, pY:Number) : void {
+			var img:Bitmap = new Resource.tfmDecorations(), scale:Number = 0.75;
+			var myObj:Sprite = new Sprite();
 			myObj.addChild(img);
 			img.x = -(img.width*scale*0.5+1);
 			// img.y = -(img.height*scale*0.5+1);
 			img.y = -(img.height*scale);
 			img.scaleX = img.scaleY = scale;
 			
-			var tfmDecorationsBtn = _toolsTray.addChild(new ButtonBase({ obj:myObj, x:pX, y:pY }));
+			var tfmDecorationsBtn:ButtonBase = _toolsTray.addChild(new ButtonBase({ obj:myObj, x:pX, y:pY })) as ButtonBase;
 			tfmDecorationsBtn.addChild(myObj);
 			tfmDecorationsBtn.addEventListener(ButtonBase.CLICK, _onTransformiceDecorationsChosen);
 		}
@@ -343,7 +343,7 @@ package app2
 				// toolLoader.contentLoaderInfo.addEventListener("complete", finChargement);
 				addChild(toolLoader);
 			}
-			catch(e) {}
+			catch(e:*) {}
 		}
 		
 		
@@ -353,7 +353,7 @@ package app2
 		****************************/
 		private function _load(pPacks:Array, pCacheBreaker:String, pCallback:Function) : void {
 			Fewf.assets.load(pPacks, pCacheBreaker);
-			var tFunc = function(event:Event){
+			var tFunc:Function = function(event:Event):void{
 				Fewf.assets.removeEventListener(AssetManager.LOADING_FINISHED, tFunc);
 				pCallback();
 				tFunc = null; pCallback = null;

@@ -48,7 +48,7 @@ package ext
 			dispatchEvent(new Event(FancySliderExt.CHANGE));
 		}
 		
-		public function updateViaMouseWheelDelta(pDelta) : void {
+		public function updateViaMouseWheelDelta(pDelta:*) : void {
 			this.value += pDelta * 0.2;
 		}
 		
