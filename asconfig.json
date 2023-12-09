@@ -29,10 +29,12 @@
 		"verbose-stacktraces": false,
 		"static-link-runtime-shared-libraries": true,
 		"library-path": [
+			"./fla/interface.swc",
 			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/ActionScript 3.0/libs/11.0/textLAyout.swc",
 			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/ActionScript 3.0/libs/flash.swc"
 		],
 		"include-libraries": [
+			"./fla/interface.swc",
 			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/ActionScript 3.0/libs/11.0/textLAyout.swc",
 			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/ActionScript 3.0/libs/flash.swc"
 		]
