@@ -16,11 +16,6 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\ActionScript 3.0\libs" />
-    <class path="E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Component Source\ActionScript 3.0\User Interface" />
-    <class path="E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Component Source\ActionScript 3.0\FLVPlayback" />
-    <class path="E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Component Source\ActionScript 3.0\FLVPlaybackCaptioning" />
-    <class path="E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Components" />
   </classpaths>
   <!-- Build options -->
   <build>

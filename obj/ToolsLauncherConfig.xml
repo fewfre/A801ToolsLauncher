@@ -33,11 +33,6 @@
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
       <path-element>E:\projects\atelier801\A801ToolsLauncher\src</path-element>
-      <path-element>E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\ActionScript 3.0\libs</path-element>
-      <path-element>E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Component Source\ActionScript 3.0\User Interface</path-element>
-      <path-element>E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Component Source\ActionScript 3.0\FLVPlayback</path-element>
-      <path-element>E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Component Source\ActionScript 3.0\FLVPlaybackCaptioning</path-element>
-      <path-element>E:\programs\Adobe\Adobe Flash CS6\Common\Configuration\Components</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <include-libraries>

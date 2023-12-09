@@ -1,12 +1,7 @@
 {
 	"compilerOptions": {
 		"source-path": [
-			"src",
-			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/ActionScript 3.0/libs",
-			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/Component Source/ActionScript 3.0/User Interface",
-			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/Component Source/ActionScript 3.0/FLVPlayback",
-			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/Component Source/ActionScript 3.0/FLVPlaybackCaptioning",
-			"E:/programs/Adobe/Adobe Flash CS6/Common/Configuration/Components"
+			"src"
 		],
 		"output": "bin/tools.swf",
 		"default-frame-rate": 30,
