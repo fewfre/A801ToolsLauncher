@@ -1,35 +1,32 @@
 package app2
 {
-	import app2.data.*;
-	import app2.ui.LoaderDisplay;
-	
-	import com.fewfre2.utils.*;
-
-	import flash.display.*;
-	import flash.events.*;
-	import flash.system.Capabilities;
 	import app2.data.ConstantsApp;
-	
-	import flash.system.LoaderContext;
-	import flash.display.Loader;
-	import flash.net.URLLoader;
-	import flash.net.*;
-	import fl.controls.Slider;
-	
 	import app2.ui.buttons.*;
-	import app2.ui.*;
+	import app2.ui.LoaderDisplay;
+	import app2.ui.OpenedInBrowserPopup;
+	import app2.ui.RoundedRectangle;
 	import com.fewfre2.display.*;
+	import com.fewfre2.utils.AssetManager;
+	import com.fewfre2.utils.Fewf;
 	import ext.ParentApp;
+	import resources.Resource;
 	
-    import flash.display.*;
-    import flash.events.*;
-    import flash.net.*;
-    import flash.system.*;
-    import flash.utils.*;
-    import resources.Resource;
+	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
+	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.events.Event;
+	import flash.net.navigateToURL;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.system.Capabilities;
+	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 
 	[SWF(backgroundColor="0x6A7495" , width="900" , height="425")]
-	public class Main extends MovieClip
+	public class Main extends Sprite
 	{
 		// Storage
 		private var _loaderDisplay	: LoaderDisplay;
@@ -51,7 +48,7 @@ package app2
 		private function _start(...args:*) : void {
 			_swfUrlBase = this.loaderInfo.parameters.swfUrlBase || "";
 			
-			Fewf.init(stage);
+			Fewf.init(stage, 'fewf-a801-tools-launcher');
 			
 			stage.align = StageAlign.TOP;
 			stage.scaleMode = StageScaleMode.SHOW_ALL;
@@ -63,6 +60,14 @@ package app2
 			
 			_setupI18n();
 			_addToolsTray();
+			
+			// Use quick app id if there is one
+			switch(getQuickAppId()) {
+				case ConstantsApp.QUICK_APP_ID_TFM_DRESS: {
+					_onTransformiceDressroomChosen(null);
+					break;
+				}
+			}
 		}
 		
 		// private function _startPreload() : void {
@@ -115,6 +120,7 @@ package app2
 					"official_dressing": { "text":"Transformice now has an official dressroom!\nUse the command /dressing in-game to open it." },
 					"read_more": { "text":"Read more" },
 					"Discord": { "text":"Discord" },
+					"open_app_start": { "text":"= open on app load" },
 					"OpenedInBrowser": { "text":"Link opened in web browser" }
 				}
 			});
@@ -123,17 +129,17 @@ package app2
 		/***************************
 		* Setup Selections
 		****************************/
-		private var _toolsTray : MovieClip;
+		private var _toolsTray : Sprite;
 		private var _openedInBrowserPopup : OpenedInBrowserPopup;
 		private function _addToolsTray() : void {
-			_toolsTray = addChild(new MovieClip()) as MovieClip;
+			_toolsTray = addChild(new Sprite()) as Sprite;
 			_toolsTray.x = stage.stageWidth * 0.5;
 			_toolsTray.y = stage.stageHeight * 0.5;
 			
-			var btns:Array;
+			var btns:Vector.<SpriteButton>;
 			
 			// Transformice
-			_addToolSection(0, -90, new Resource.transformice(), btns = [
+			_addToolSection(0, -90, new Resource.transformice(), btns = new <SpriteButton>[
 				_newToolBtn(new Resource.tfmShamanItems(), 1, "Shaman Items", _onTransformiceShamanItemsChosen),
 				_newToolBtn(new Resource.tfmDressroom(), 1, "Dressroom", _onTransformiceDressroomChosen, 90),
 				_newToolBtn(new Resource.tfmSkillTree(), 1, "Skill Tree Builder", _onTransformiceSkillTreeChosen),
@@ -142,22 +148,38 @@ package app2
 			btns[2].x += 10;
 			btns[1].Text.size = 15;
 			
+			var tfmDressHeartButton:SpriteButton = new SpriteButton({ width:24, height:24, obj:new Sprite() })
+			.setXY(btns[1].x + 34, btns[1].y - 55).appendTo(btns[1].parent as Sprite) as SpriteButton;
+			var toggleHeartAsset:Function = function(pFull:Boolean):void{
+				tfmDressHeartButton.ChangeImage(new Sprite());
+				var icon:DisplayObject = pFull ? new Resource.heartFull() : new Resource.heartEmpty();
+				icon.x = -9; icon.y = -11;
+				(tfmDressHeartButton.Image as Sprite).addChild(icon);
+			};
+			toggleHeartAsset(getQuickAppId() == ConstantsApp.QUICK_APP_ID_TFM_DRESS);
+			tfmDressHeartButton.on(ButtonBase.CLICK, function(e:Event):void {
+				var quickAppId:String = getQuickAppId();
+				var on:Boolean = !(quickAppId == ConstantsApp.QUICK_APP_ID_TFM_DRESS); // toggle to opposite
+				Fewf.sharedObject.setData(ConstantsApp.SHARED_OBJECT_QUICK_APP_ID, on ? ConstantsApp.QUICK_APP_ID_TFM_DRESS : null);
+				toggleHeartAsset(on);
+			})
+			
 			_addTfmDecorationsButton(-150, -162);
 			
 			// Fortoresse
-			_addToolSection(-(200+110-10), 90+25, new Resource.fortoresse(), [
+			_addToolSection(-(200+110-10), 90+25, new Resource.fortoresse(), new <SpriteButton>[
 				_newToolBtn(new Resource.fortDressroom(), 1, "Dressroom", _onFortoresseDressroomChosen),
 			], 200);
 			
 			// Deadmaze
-			_addToolSection(0, 90+25, new Resource.deadmaze(), [
+			_addToolSection(0, 90+25, new Resource.deadmaze(), new <SpriteButton>[
 				_newToolBtn(new Resource.dmDressroom(), 0.9, "Dressroom", _onDeadMazeDressroomChosen),
 				_newToolBtn(new Resource.dmBestiary(), 0.75, "Bestiary", _onDeadMazeBestiaryChosen),
 				_newToolBtn(new Resource.dmTracker(), 1, "Tracker", _onDeadMazeTrackerChosen),
 			]);
 			
 			// Nekodancer
-			var tTray:Sprite = _addToolSection(200+110-10, 90+25, new Resource.nekodancer(), [
+			var tTray:Sprite = _addToolSection(200+110-10, 90+25, new Resource.nekodancer(), new <SpriteButton>[
 				_newToolBtn(new Resource.nekoDressroom(), 0.8, "Dressroom", _onNekodancerDressroomChosen),
 			], 200);
 			tTray.getChildAt(0).y += 22;
@@ -170,6 +192,12 @@ package app2
 			readMoreLink.addEventListener("click", function():void{
 				_openLink("https://atelier801.com/topic?f=5&t=930014");
 			});
+			
+			// Add note about "open on app load"
+			var heartExample:DisplayObject = _toolsTray.addChild(new Resource.heartFull());
+			heartExample.x = 260;
+			heartExample.y = -100;
+			new TextBase({ text:"open_app_start", x:heartExample.x + 20 + 3, y:heartExample.y + (20/2), originX:0 }).appendTo(_toolsTray);
 			
 			// Add Discord Link
 			var tDiscordBtn:SpriteButton = _newToolBtn(new Resource.discordIcon(), 1, "Discord", _onDiscordClicked, 70);
@@ -196,21 +224,19 @@ package app2
 			return btn;
 		}
 		
-		private function _addToolSection(x:Number, y:Number, icon:Bitmap, buttons:Array, width:int=300,height:int=125) : Sprite {
-			var tray = _toolsTray.addChild(new RoundedRectangle({ x:x, y:y, width:width, height:height, origin:0.5 })) as RoundedRectangle;
+		private function _addToolSection(x:Number, y:Number, icon:Bitmap, buttons:Vector.<SpriteButton>, width:int=300,height:int=125) : Sprite {
+			var tray:RoundedRectangle = _toolsTray.addChild(new RoundedRectangle({ x:x, y:y, width:width, height:height, origin:0.5 })) as RoundedRectangle;
 			tray.drawSimpleGradient(ConstantsApp.COLOR_TRAY_GRADIENT, 15, ConstantsApp.COLOR_TRAY_B_1, ConstantsApp.COLOR_TRAY_B_2, ConstantsApp.COLOR_TRAY_B_3);
 			// tray.draw(0x6A7495, 15, 0x5d7d90, 0x11171c, 0x3c5064);
 			
-			var icon = tray.addChild(icon);
+			tray.addChild(icon);
 			icon.x = -icon.width*0.5;
 			icon.y = -height*0.5-icon.height+25;
 			
 			var spacingX:Number = buttons[0].Width+10;
 			var startX:Number = -spacingX*(buttons.length-1)*0.5;
 			for(var i:int = 0; i < buttons.length; i++) {
-				var btn:SpriteButton = tray.addChild(buttons[i]) as SpriteButton;
-				btn.x = startX+i*spacingX;
-				btn.y = 12;
+				buttons[i].appendTo(tray).setXY(startX+i*spacingX, 12);
 			}
 			
 			return tray;
@@ -229,6 +255,8 @@ package app2
 			tfmDecorationsBtn.addChild(myObj);
 			tfmDecorationsBtn.addEventListener(ButtonBase.CLICK, _onTransformiceDecorationsChosen);
 		}
+		
+		private function getQuickAppId() : String { return Fewf.sharedObject.getData(ConstantsApp.SHARED_OBJECT_QUICK_APP_ID); }
 		
 		private function _onTransformiceDressroomChosen(e:*) : void {
 			_doToolChoiceClicked("https://projects.fewfre.com/a801/transformice/dressroom/", "dressroom.swf");

@@ -24,6 +24,10 @@ package app2.data
 		
 		public static const ANIMATION_FRAME_BY_FRAME: Boolean = false;
 		
+		public static const QUICK_APP_ID_TFM_DRESS: String = 'transformice-dressroom';
+		
+		public static const SHARED_OBJECT_QUICK_APP_ID: String = 'quick-app-id';
+		
 		/****************************
 		* Colors
 		*****************************/

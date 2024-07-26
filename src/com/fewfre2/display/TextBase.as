@@ -71,6 +71,8 @@ package com.fewfre2.display
 			
 			_addEventListeners();
 		}
+		public function setXY(pX:Number, pY:Number) : TextBase { x = pX; y = pY; return this; }
+		public function appendTo(target:Sprite): TextBase { target.addChild(this); return this; }
 
 		/****************************
 		* Render

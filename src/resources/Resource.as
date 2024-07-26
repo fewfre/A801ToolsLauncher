@@ -38,5 +38,9 @@ package resources
 		// https://iconarchive.com/show/papirus-apps-icons-by-papirus-team/discord-icon.html
 		[Embed (source="images/discord-icon.png" )]
 		public static const discordIcon:Class;
+		[Embed (source="images/coeur_plein.png" )]
+		public static const heartFull:Class;
+		[Embed (source="images/coeur_vide.png" )]
+		public static const heartEmpty:Class;
 	}
 }
