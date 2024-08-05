@@ -344,6 +344,8 @@ package app2
 		// }// end function
 
 		private function _toolStartLoad() : void {
+			_loaderDisplay = addChild( new LoaderDisplay({ x:stage.stageWidth * 0.5, y:stage.stageHeight * 0.5 }) ) as LoaderDisplay;
+			
 			toolUrlLoader = new URLLoader();
 			toolUrlLoader.dataFormat = "binary";
 			toolUrlLoader.addEventListener("complete", _onToolLoadComplete);
@@ -363,12 +365,18 @@ package app2
 			while (numChildren) {
 				removeChildAt(0);
 			}
+			addChild(_loaderDisplay); // Re-add loader
 			
 			try {
 				// Add SWF to stage
 				toolLoader = new Loader();
-				toolLoader.loadBytes(data, ctx);
 				// toolLoader.contentLoaderInfo.addEventListener("complete", finChargement);
+				toolLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void{
+					_loaderDisplay.destroy();
+					removeChild( _loaderDisplay );
+					_loaderDisplay = null;
+				});
+				toolLoader.loadBytes(data, ctx);
 				addChild(toolLoader);
 			}
 			catch(e:*) {}
