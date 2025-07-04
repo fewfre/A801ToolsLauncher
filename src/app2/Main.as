@@ -29,10 +29,11 @@ package app2
 	public class Main extends Sprite
 	{
 		// Storage
-		private var _loaderDisplay	: LoaderDisplay;
-		private var _config			: Object;
-		private var _defaultLang	: String;
-		private var _swfUrlBase		: String;
+		private var _loaderDisplay   : LoaderDisplay;
+		private var _config          : Object;
+		private var _defaultLang     : String;
+		private var _swfUrlBase      : String;
+		private var _networkProtocol : String;
 		
 		// Constructor
 		public function Main() {
@@ -47,6 +48,7 @@ package app2
 		
 		private function _start(...args:*) : void {
 			_swfUrlBase = this.loaderInfo.parameters.swfUrlBase || "";
+			_networkProtocol = Fewf.isBrowserLoaded ? "https" : "http"; // We don't want to use https on AIR since it was causing some people issue on W7
 			
 			Fewf.init(stage, 'fewf-a801-tools-launcher');
 			
@@ -259,11 +261,11 @@ package app2
 		private function getQuickAppId() : String { return Fewf.sharedObject.getData(ConstantsApp.SHARED_OBJECT_QUICK_APP_ID); }
 		
 		private function _onTransformiceDressroomChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/transformice/dressroom/", "dressroom.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/transformice/dressroom/", "dressroom.swf");
 		}
 		
 		private function _onTransformiceShamanItemsChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/transformice/shaman_items/", "app.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/transformice/shaman_items/", "app.swf");
 		}
 		
 		private function _onTransformiceSkillTreeChosen(e:*) : void {
@@ -271,15 +273,15 @@ package app2
 		}
 		
 		private function _onTransformiceDecorationsChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/transformice/decorations/", "app.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/transformice/decorations/", "app.swf");
 		}
 		
 		private function _onDeadMazeDressroomChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/deadmaze/dressroom/", "dressroom.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/deadmaze/dressroom/", "dressroom.swf");
 		}
 		
 		private function _onDeadMazeBestiaryChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/deadmaze/bestiary/", "bestiary.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/deadmaze/bestiary/", "bestiary.swf");
 		}
 		
 		private function _onDeadMazeTrackerChosen(e:*) : void {
@@ -287,11 +289,11 @@ package app2
 		}
 		
 		private function _onFortoresseDressroomChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/fortoresse/dressroom/", "dressroom.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/fortoresse/dressroom/", "dressroom.swf");
 		}
 		
 		private function _onNekodancerDressroomChosen(e:*) : void {
-			_doToolChoiceClicked("https://projects.fewfre.com/a801/nekodancer/dressroom/", "dressroom.swf");
+			_doToolChoiceClicked(_networkProtocol+"://projects.fewfre.com/a801/nekodancer/dressroom/", "dressroom.swf");
 		}
 		
 		private function _onDiscordClicked(e:*) : void {
@@ -350,7 +352,7 @@ package app2
 			toolUrlLoader.dataFormat = "binary";
 			toolUrlLoader.addEventListener("complete", _onToolLoadComplete);
 			// toolUrlLoader.addEventListener("progress", chargementEnCours);
-			var now:Date = new Date(), cb:String = [now.getFullYear(), now.getMonth(), now.getDate()].join("-"); // Cache break once a day to be safe
+			var now:Date = new Date(), cb:String = [ConstantsApp.VERSION, now.getFullYear(), now.getMonth(), now.getDate()].join("-"); // Cache break once a day to be safe
 			toolUrlLoader.load(new URLRequest(toolSwfUrl + "?d=" + cb));
 		}
 

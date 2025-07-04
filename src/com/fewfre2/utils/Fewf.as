@@ -2,17 +2,19 @@ package com.fewfre2.utils
 {
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.external.ExternalInterface;
 	
 	// Global access class
 	public class Fewf
 	{
 		// Storage
-		public static var _assets : AssetManager;
-		public static var _i18n : I18n;
-		public static var _dispatcher : MovieClip;
+		private static var _assets : AssetManager;
+		private static var _i18n : I18n;
+		private static var _dispatcher : MovieClip;
 		private static var _sharedObject : SharedObjectManager;
 		private static var _sharedObjectGlobal : SharedObjectManager;
-		public static var _stage : Stage;
+		private static var _stage : Stage;
+		private static var _isBrowserLoaded : Boolean;
 		
 		// Properties
 		public static function get assets() : AssetManager { return _assets; }
@@ -21,6 +23,7 @@ package com.fewfre2.utils
 		public static function get sharedObject() : SharedObjectManager { return _sharedObject; }
 		public static function get sharedObjectGlobal() : SharedObjectManager { return _sharedObjectGlobal; }
 		public static function get stage() : Stage { return _stage; }
+		public static function get isBrowserLoaded() : Boolean { return _isBrowserLoaded; }
 		
 		public static function init(pStage:Stage, uniqID:String) : void {
 			_assets = new AssetManager();
@@ -29,6 +32,7 @@ package com.fewfre2.utils
 			_sharedObject = new SharedObjectManager(uniqID);
 			_sharedObjectGlobal = new SharedObjectManager("fewfre");
 			_stage = pStage;
+			_isBrowserLoaded = ExternalInterface.available ? ExternalInterface.call("eval", "window.location.href") : false;
 		}
 	}
 }

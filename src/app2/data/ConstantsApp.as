@@ -12,7 +12,7 @@ package app2.data
 		/****************************
 		* General
 		*****************************/
-		public static const VERSION					: String = "1.1";
+		public static const VERSION					: String = "1.1b";
 		public static const SOURCE_URL				: String = "https://github.com/fewfre/A801ToolsLauncher";
 		
 		public static const DEFAULT_SKIN_ID			: int = 0;
